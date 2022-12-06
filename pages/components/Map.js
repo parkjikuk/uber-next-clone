@@ -5,20 +5,32 @@ import { useEffect } from 'react';
 
 mapboxgl.accessToken = "pk.eyJ1IjoicGFya2pheSIsImEiOiJjbGI3MjVlaGIwNnk0M3RydnMzeGgyc2NoIn0.lRA8nUxA0ILyB6qkhVyPLA";
 
-const Map = () => {
+const Map = (props) => {
   useEffect(() => {
     const map = new mapboxgl.Map({
       container: "map",
       style: 'mapbox://styles/mapbox/streets-v12',
-      center: [-99.9, 39.35],
-      zoom: 4,
+      center: [127, 37],
+      zoom: 7,
     });
-  });
+
+    if(props.pickupCoordinates) {
+      addToMap(map, props.pickupCoordinates)
+    }
+
+    if(props.dropoffCoordinates) {
+      addToMap(map, props.dropoffCoordinates)
+    }
+  }, [props.pickupCoordinates, props.dropoffCoordinates]);
+
+  const addToMap = (map, coordinates) => {
+    const marker1 = new mapboxgl.Marker()
+    .setLngLat(coordinates)
+    .addTo(map);
+  }
 
   return (
-    <Wrapper id="map">
-      
-    </Wrapper>
+    <Wrapper id="map"></Wrapper>
   );
 };
 
