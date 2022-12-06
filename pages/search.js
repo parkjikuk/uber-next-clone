@@ -26,9 +26,11 @@ const search = () => {
         <StarIcon src="https://cdn3.iconfinder.com/data/icons/lightly-icons/30/652865-star-add-60.png" />
         Saved Places
       </SavedPlaces>
-      <ConfirmLocation>
-        Confirm Location
-      </ConfirmLocation>
+      <Link href="/confirm">
+        <ConfirmLocation>
+          Confirm Location
+        </ConfirmLocation>
+      </Link>
     </Wrapper>
   );
 };
@@ -89,5 +91,5 @@ bg-gray-400 w-10 h-10 p-2 rounded-full mr-2
 `
 
 const ConfirmLocation = tw.div`
-flex justify-center bg-black text-white p-2 mt-2
+bg-black text-white text-center mt-2 mx-4 px-4 py-3 text-2xl cursor-pointer
 `
