@@ -1,8 +1,11 @@
 import Link from 'next/link';
-import React from 'react';
+import React, { useState } from 'react';
 import tw from "tailwind-styled-components"
 
 const search = () => {
+  const [pickup, setPickup] = useState("");
+  const [dropoff, setDropoff] = useState("");
+  
   return (
     <Wrapper>
       <ButtonContainer>
@@ -17,8 +20,14 @@ const search = () => {
           <Square src="https://cdn4.iconfinder.com/data/icons/essential-app-2/16/stop-block-cube-music-square-512.png" />
         </FromToIcons>
         <InputBoxes>
-          <Input placeholder="출발 장소" />
-          <Input placeholder="어디로 가실건가요?"/>
+          <Input placeholder="출발 장소" 
+            value={pickup}
+            onChange={(e) => setPickup(e.target.value)}
+          />
+          <Input placeholder="어디로 가실건가요?"
+            value={dropoff}
+            onChange={(e) => setDropoff(e.target.value)}
+          />
         </InputBoxes>
         <PlusIcon src="https://cdn2.iconfinder.com/data/icons/social-productivity-line-art-2/128/add-64.png" />
       </InputContainer>
@@ -26,7 +35,13 @@ const search = () => {
         <StarIcon src="https://cdn3.iconfinder.com/data/icons/lightly-icons/30/652865-star-add-60.png" />
         Saved Places
       </SavedPlaces>
-      <Link href="/confirm">
+      <Link href={{
+        pathname: "/confirm",
+        query: {
+          pickup: pickup,
+          dropoff: dropoff
+        }
+      }} legacyBehavior>
         <ConfirmLocation>
           Confirm Location
         </ConfirmLocation>
