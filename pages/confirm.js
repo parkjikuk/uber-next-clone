@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import tw from "tailwind-styled-components"
 import Map from './components/Map';
 import RideSelector from './components/RideSelector';
+import Link from 'next/link';
 
 const Confirm = () => {
   const router = useRouter()
@@ -44,6 +45,11 @@ const Confirm = () => {
 
   return (
     <Wrapper>
+      <ButtonContainer>
+        <Link href="/search" legacyBehavior>
+          <BackButton src="https://i.postimg.cc/ncKGTfGs/return-button-png-26.png" />
+        </Link>
+      </ButtonContainer>
       <Map 
         pickupCoordinates = {pickupCoordinates}
         dropoffCoordinates = {dropoffCoordinates}
@@ -64,6 +70,14 @@ export default Confirm;
 
 const Wrapper = tw.div`
 flex flex-col h-screen 
+`
+
+const ButtonContainer = tw.div`
+rounded-full absolute z-10 top-4 left-4 cursor-pointer shadow-md bg-white
+`
+
+const BackButton = tw.img`
+h-12
 `
 
 const RideContainer = tw.div`
