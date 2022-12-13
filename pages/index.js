@@ -4,10 +4,30 @@ import tw from "tailwind-styled-components"
 import mapboxgl from '!mapbox-gl';
 import Map from './components/Map'
 import Link from 'next/link';
+import { auth } from '../firebase'
+import { onAuthStateChanged, signOut } from 'firebase/auth'
+import { useRouter } from 'next/router';
+import { useEffect, useState } from 'react';
 
-mapboxgl.accessToken = "pk.eyJ1IjoicGFya2pheSIsImEiOiJjbGI3MjVlaGIwNnk0M3RydnMzeGgyc2NoIn0.lRA8nUxA0ILyB6qkhVyPLA";
 
 export default function Home() {
+  const [user, setUser] = useState(null);
+  const router = useRouter()
+
+  useEffect(() => {
+    return onAuthStateChanged(auth, user => {
+      if(user) {
+        setUser({
+          name: user.displayName,
+          photoUrl: user.photoURL,
+        })
+      } else {
+        setUser(null)
+        router.push('./login')
+      }
+    })
+  }, [])
+
   return (
     <Wrapper>
       <Map />
@@ -15,8 +35,9 @@ export default function Home() {
         <Header>
           <UberLogo src="https://download.logo.wine/logo/Uber/Uber-Logo.wine.png" />
           <Profile>
-            <Name>PARKJAY</Name>
-            <UserImage src="https://cdn.pixabay.com/photo/2016/05/30/15/33/julia-roberts-1424985_1280.png"/>
+            <SignOut onClick={() => signOut(auth)}>로그아웃</SignOut>
+            <Name>{user && user.name}</Name>
+            <UserImage src={user && user.photoUrl} />
           </Profile>
         </Header>
         <ActionButtons>
@@ -58,16 +79,20 @@ const UberLogo = tw.img`
 h-28
 `
 
+const SignOut = tw.button`
+bg-black text-white mr-4 p-2 rounded-full
+`
+
 const Profile = tw.div`
 flex items-center
 `
 
 const Name = tw.div`
-mr-4 w-20 text-sm
+w-20 text-sm
 `
 
 const UserImage = tw.img`
-h-12 w-12 rounded-full border border-gray-200 p-px
+h-12 w-12 rounded-full border border-gray-200 p-px cursor-pointer
 `
 
 const ActionButtons = tw.div`
