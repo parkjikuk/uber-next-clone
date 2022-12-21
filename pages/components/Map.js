@@ -12,7 +12,7 @@ const Map = (props) => {
       container: "map",
       style: 'mapbox://styles/mapbox/streets-v12',
       center: [127, 37],
-      zoom: 3,
+      zoom: 6,
     });
 
     const language = new MapboxLanguage(['get', 'Korean']);

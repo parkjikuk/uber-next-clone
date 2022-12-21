@@ -7,10 +7,10 @@ import Link from 'next/link';
 
 const Confirm = () => {
   const router = useRouter()
-  const {pickup, dropoff} = router.query
+  const {pickup, dropoff} = router.query;
 
-  const [ pickupCoordinates, setPickupCoordinates] = useState([0, 0])
-  const [ dropoffCoordinates, setDropoffCoordinates] = useState([0, 0])
+  const [ pickupCoordinates, setPickupCoordinates] = useState([0, 0]);
+  const [ dropoffCoordinates, setDropoffCoordinates] = useState([0, 0]);
 
   const getPickupCoordinates = (pickup) => {
     fetch(`https://api.mapbox.com/geocoding/v5/mapbox.places/${pickup}.json?` + 
